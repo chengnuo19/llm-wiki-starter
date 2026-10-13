@@ -1,0 +1,64 @@
+# {{VAULT_NAME}} - LLM Wiki 维护规则
+
+本目录是一个由 Obsidian 浏览、由 AI Agent 维护的本地知识库。
+
+每次开始工作时，依次阅读：
+
+1. 本文件
+2. `wiki/index.md`
+3. `wiki/log.md` 最近的记录
+
+## 目录职责
+
+- `raw/`：原始资料层。只读，不改写、不重命名、不删除已有来源。
+- `raw/assets/`：图片和附件。
+- `wiki/entities/`：人物、组织、产品、项目等实体页。
+- `wiki/concepts/`：术语、理论、方法等概念页。
+- `wiki/sources/`：每份原始资料对应的来源摘要页。
+- `wiki/analyses/`：跨来源比较、问题答案和综合判断。
+- `wiki/index.md`：内容索引；每次写入 Wiki 后同步更新。
+- `wiki/log.md`：操作日志；只能在末尾追加，不能改写历史。
+
+## 页面规范
+
+Wiki 页面使用以下 YAML frontmatter：
+
+```yaml
+---
+title: 页面标题
+type: entity | concept | source | analysis
+tags: []
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+sources: 0
+---
+```
+
+- 文件名使用清晰、可读、稳定的标题。
+- 内部关系使用 Obsidian 双向链接。
+- 实体、概念和分析页中的事实必须能追溯到至少一个 `wiki/sources/` 页面。
+- 来源摘要页必须链接回 `raw/` 中的原始资料。
+- 不确定的信息明确标成“待核实”，不能补写成事实。
+- 来源冲突时保留各自说法、日期和出处，不静默覆盖。
+
+## Ingest：摄取新资料
+
+1. 阅读 `wiki/index.md` 和 `wiki/log.md`，避免重复摄取。
+2. 完整阅读指定的 `raw/` 资料。
+3. 在 `wiki/sources/` 新建或更新对应摘要页。
+4. 新建或更新相关实体页、概念页，并维护双向链接。
+5. 更新 `wiki/index.md` 的页面数、来源数、日期和条目。
+6. 在 `wiki/log.md` 末尾追加 `## [YYYY-MM-DD] ingest | 标题` 记录。
+
+禁止修改 `raw/` 原文。若同一来源的新版本到达，应作为新文件摄取并注明版本关系。
+
+## Query：查询与回灌
+
+1. 先读 `wiki/index.md` 定位页面，再读相关页面。
+2. 回答中列出依据，并区分来源事实、综合判断和待核实信息。
+3. 只有用户明确要求保存或回灌时，才把答案写入 `wiki/analyses/`。
+4. 回灌后更新 `wiki/index.md`，并在 `wiki/log.md` 追加 query 记录。
+
+## Lint：健康检查
+
+先生成报告，不直接修复。检查矛盾、孤立页、缺链、无来源主张、重复页面、过期摘要和资料缺口。用户确认修复项后再修改，并在 `wiki/log.md` 追加 lint 记录。

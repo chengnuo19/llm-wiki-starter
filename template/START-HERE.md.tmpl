@@ -1,0 +1,41 @@
+---
+title: 从这里开始
+type: guide
+tags: [llm-wiki, obsidian]
+created: {{DATE}}
+updated: {{DATE}}
+---
+
+# {{VAULT_NAME}}
+
+这是一个 Karpathy 风格的 LLM Wiki。Obsidian 负责浏览，Codex 或 Claude Code 负责维护 Markdown 文件。
+
+## 第一次打开
+
+1. 在 Obsidian 中选择“打开本地仓库文件夹”，选择本目录。
+2. 在“设置 → 文件与链接”中，把附件默认位置设为 `raw/assets`。
+3. 日常浏览从 [[wiki/index|Wiki 目录]] 开始。
+4. 检查“设置 → 第三方插件”。初始化器已复制常用插件程序，但没有复制插件 `data.json`；涉及模型、账号或同步的插件需要重新配置。
+5. 进入“设置 → QuickAdd”，点击 `Import package...`，导入 `QuickAdd Packages/LLM Wiki.quickadd.json`，即可获得四类 Wiki 页面命令和模板。
+
+## 摄取资料
+
+先把网页、PDF、转录稿或笔记放入 `raw/`，然后对 Agent 说：
+
+> 请先读取 AGENTS.md。raw 中新增了《文件名》，请按 Ingest 流程处理，并告诉我创建和更新了哪些页面。
+
+## 查询并回灌
+
+> 请基于 wiki 回答“我的问题”。区分来源事实、综合判断和待核实项，并列出依据。这个答案值得保留，请回灌为 analysis 页面。
+
+如果不想保存答案，删掉最后一句即可。
+
+## 健康检查
+
+> 请按 AGENTS.md 的 Lint 流程检查整个 wiki。只给报告，不要直接修改；按严重程度列出问题和建议修复方式。
+
+## 内容流转
+
+`raw 原文 → source 摘要 → entity/concept 知识页 → analysis 综合页`
+
+`wiki/index.md` 是内容入口，`wiki/log.md` 是时间线。不要手工修改已经摄取的 `raw/` 原文。
